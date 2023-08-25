@@ -22,7 +22,7 @@ To run
 ```
 python apply_block_weight.py
 ```
-# license
+## license
 stable-diffusion-webui: AGPL-3.0 license  
 sd-webui-lora-block-weight: ?  
 ss-scripts: Apache-2.0 license  
