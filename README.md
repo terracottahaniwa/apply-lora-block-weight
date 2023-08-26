@@ -1,6 +1,7 @@
 # apply_block_weight
 ## What is this?
-This is a utility to apply LoRA Block Weight (lbw) to LoRA for sd1.5 and export to a new safetensors.
+This is a utility to apply LoRA Block Weight (lbw) to LoRA for sd1.5 and export to a new safetensors.  
+Currently only 17 or 26 layers are supported.
 ## Install
 ```
 python -m venv venv
