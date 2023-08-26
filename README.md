@@ -14,9 +14,9 @@ To run
 python apply_block_weight.py [-h] input output ratios
 
 positional arguments:
-  input       path_to_input_safetensors
-  output      path_to_output_safetensors
-  ratios      the lbw numbers
+  input       path to input safetensors
+  output      path to output safetensors
+  ratios      the lbw numeric array
 ```
 ## License
 stable-diffusion-webui: AGPL-3.0 license  
