@@ -12,9 +12,9 @@ from train_util import precalculate_safetensors_hashes
 # argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("input", help="path_to_input_safetensors")
-parser.add_argument("output", help="path_to_output_safetensors")
-parser.add_argument("ratios", help = "the lbw numbers")
+parser.add_argument("input", help="path to input safetensors")
+parser.add_argument("output", help="path to output safetensors")
+parser.add_argument("ratios", help = "the lbw numeric array")
 args = parser.parse_args()
 
 
