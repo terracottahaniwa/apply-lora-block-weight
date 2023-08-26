@@ -18,7 +18,7 @@ positional arguments:
   output      path to output safetensors
   ratios      the lbw numeric array
 ```
-If you want the BASE value to be negative, the LBW array is considered a command line option.  
+If you want the BASE value to be negative, the LBW array is evaluated as a command line option.  
 To avoid this, insert -- before the array as follows  
 ```
 python apply_block_weight.py input output -- -1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
