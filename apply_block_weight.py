@@ -1,5 +1,6 @@
 import os
 import re
+import argparse
 
 import torch
 from safetensors import safe_open
@@ -8,18 +9,27 @@ from networks import convert_diffusers_name_to_compvis
 from train_util import precalculate_safetensors_hashes
 
 
+# argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("input", help="path_to_input_safetensors")
+parser.add_argument("output", help="path_to_output_safetensors")
+parser.add_argument("ratios", help = "the lbw numbers")
+args = parser.parse_args()
+
+
 # settings
 
-load_path = r"path_to_input_model.safetensors"
-save_path = r"path_to_output_model.safetensors"
-ratios = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+load_path = args.input
+save_path = args.output
+ratios = args.ratios
 
 
 def main():
     BLOCKID17 = [
         "BASE","IN01","IN02","IN04","IN05","IN07","IN08","M00",
         "OUT03","OUT04","OUT05","OUT06","OUT07","OUT08","OUT09","OUT10","OUT11"]
-    
+
     def compvis_name_to_blockid(compvis_name):
         patterns = [
             r"^transformer_text_model_(encoder)_layers_(\d+)_.*",
