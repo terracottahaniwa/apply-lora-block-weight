@@ -48,7 +48,6 @@ def main():
         for pattern in patterns:
             strings = re.sub(pattern, replacement, strings)
         blockid = strings
-        assert blockid in BLOCKID17, blockid
         return blockid
 
     load_path = args.input
