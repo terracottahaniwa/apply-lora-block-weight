@@ -18,17 +18,13 @@ parser.add_argument("ratios", help = "the lbw numbers")
 args = parser.parse_args()
 
 
-# settings
-
-load_path = args.input
-save_path = args.output
-ratios = args.ratios
-
-
 def main():
     BLOCKID17 = [
         "BASE","IN01","IN02","IN04","IN05","IN07","IN08","M00",
         "OUT03","OUT04","OUT05","OUT06","OUT07","OUT08","OUT09","OUT10","OUT11"]
+    BLOCKID26 = [
+        "BASE","IN00","IN01","IN02","IN03","IN04","IN05","IN06","IN07","IN08","IN09","IN10","IN11","M00",
+        "OUT00","OUT01","OUT02","OUT03","OUT04","OUT05","OUT06","OUT07","OUT08","OUT09","OUT10","OUT11"]
 
     def compvis_name_to_blockid(compvis_name):
         patterns = [
@@ -55,7 +51,14 @@ def main():
         assert blockid in BLOCKID17, blockid
         return blockid
 
-    ratio_of_ = dict(zip(BLOCKID17, ratios))
+    load_path = args.input
+    save_path = args.output
+    ratios = [float(x) for x in args.ratios.split(",")]
+
+    assert len(ratios) in [17, 26]
+    if len(ratios) == 17: ratio_of_ = dict(zip(BLOCKID17, ratios))
+    if len(ratios) == 26: ratio_of_ = dict(zip(BLOCKID26, ratios))
+    print(ratio_of_)
     tensors = {}
     with safe_open(load_path, framework="pt", device="cpu") as f:
         for key in f.keys():
@@ -64,7 +67,7 @@ def main():
             blockid = compvis_name_to_blockid(compvis_name)
             if compvis_name.endswith("lora_up.weight"):
                 tensors[key] *= ratio_of_[blockid]
-            print(f"{blockid}:{ratio_of_[blockid]}\t{key}\n\t{compvis_name}")
+                print(f"({blockid}) {compvis_name} updated with factor {ratio_of_[blockid]}")
         metadata = f.metadata()
         model_hash, legacy_hash = precalculate_safetensors_hashes(tensors, metadata)
         metadata['ss_output_name'] = os.path.splitext(os.path.basename(save_path))[0]
