@@ -54,16 +54,19 @@ def main():
     save_path = args.output
     ratios = [float(x) for x in args.ratios.split(",")]
 
-    assert len(ratios) in [17, 26]
-    if len(ratios) == 17: ratio_of_ = dict(zip(BLOCKID17, ratios))
-    if len(ratios) == 26: ratio_of_ = dict(zip(BLOCKID26, ratios))
+    LAYERS = len(ratios)
+    assert LAYERS in [17, 26]
+    if LAYERS == 17: ratio_of_ = dict(zip(BLOCKID17, ratios))
+    if LAYERS == 26: ratio_of_ = dict(zip(BLOCKID26, ratios))
     print(ratio_of_)
     tensors = {}
     with safe_open(load_path, framework="pt", device="cpu") as f:
         for key in f.keys():
             tensors[key] = f.get_tensor(key)
-            compvis_name = convert_diffusers_name_to_compvis(key, False)
+            compvis_name = convert_diffusers_name_to_compvis(key, is_sd2=False)
             blockid = compvis_name_to_blockid(compvis_name)
+            if LAYERS == 17: assert blockid in BLOCKID17
+            if LAYERS == 26: assert blockid in BLOCKID26
             if compvis_name.endswith("lora_up.weight"):
                 tensors[key] *= ratio_of_[blockid]
                 print(f"({blockid}) {compvis_name} updated with factor {ratio_of_[blockid]}")
