@@ -74,7 +74,7 @@ def main():
             blockid = compvis_name_to_blockid(compvis_name)
             if compvis_name.endswith("lora_up.weight"):
                 tensors[key] *= RATIO_OF_[blockid]
-                print(f"({blockid}) {compvis_name}"
+                print(f"({blockid}) {compvis_name} "
                       f"updated with factor {RATIO_OF_[blockid]}")
 
         metadata = f.metadata()
