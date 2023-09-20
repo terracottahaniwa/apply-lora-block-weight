@@ -2,7 +2,7 @@ import sys
 import modules.scripts as scripts
 import gradio as gr
 
-from apply_block_weight import do
+from apply_lora_block_weight import do
 
 
 class Script(scripts.Script):
