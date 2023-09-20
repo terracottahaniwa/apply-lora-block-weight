@@ -5,20 +5,22 @@ import argparse
 import torch
 from safetensors import safe_open
 from safetensors.torch import save_file
-from networks import convert_diffusers_name_to_compvis
-from train_util import precalculate_safetensors_hashes as safetensors_hashes
+from scripts.networks import convert_diffusers_name_to_compvis
+from scripts.train_util import precalculate_safetensors_hashes as safetensors_hashes
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input", help="path to input safetensors")
-    parser.add_argument("output", help="path to output safetensors")
-    parser.add_argument("ratios", help="the LBW numeric array")
-    args = parser.parse_args()
+def do(input_, output, ratios):
+    print("Apply LBW")
 
-    LOAD_PATH = args.input
-    SAVE_PATH = args.output
-    RATIOS = [float(x) for x in args.ratios.split(",")]
+    assert isinstance(input_, str)
+    assert isinstance(output, str)
+    assert isinstance(ratios, str)
+    assert os.path.exists(input_)
+    assert os.path.exists(output) == False
+
+    LOAD_PATH = input_
+    SAVE_PATH = output
+    RATIOS = [float(x) for x in ratios.split(",")]
     LAYERS = len(RATIOS)
     assert LAYERS in [17, 26]
 
@@ -63,9 +65,9 @@ def main():
         blockid = strings
 
         if LAYERS == 17:
-            assert blockid in BLOCKID17
+            assert blockid in BLOCKID17, blockid
         if LAYERS == 26:
-            assert blockid in BLOCKID26
+            assert blockid in BLOCKID26, blockid
         return blockid
 
     with safe_open(LOAD_PATH, framework="pt", device="cpu") as f:
@@ -87,6 +89,17 @@ def main():
         metadata['sshs_legacy_hash'] = legacy_hash
 
         save_file(tensors, SAVE_PATH, metadata)
+
+    print("Done")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input", help="Path to input safetensors")
+    parser.add_argument("output", help="Path to output safetensors")
+    parser.add_argument("ratios", help="The LBW numeric array")
+    args = parser.parse_args()
+    do(args.input, args.output, args.ratios)
 
 
 if __name__ == "__main__":
