@@ -7,7 +7,7 @@
 これは、LoRA Block Weight（lbw）をsd1.5向けのLoRAに適用し、新しい .safetensors ファイルを出力するためのユーティリティです。
 現在、17層または26層のみがサポートされています。
 
-※StableDiffusion の機能拡張ではなく単独で動作するユーティリティです。
+~~※StableDiffusion の機能拡張ではなく単独で動作するユーティリティです。~~
 
 
 ## Install

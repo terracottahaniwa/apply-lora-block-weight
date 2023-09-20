@@ -7,7 +7,7 @@
 This is a utility to apply LoRA Block Weight (lbw) to LoRA for sd1.5 and export to a new safetensors.
 Currently only 17 or 26 layers are supported.
 
-※This is a standalone utility, not an extension of StableDiffusion's functionalities.
+~~※This is a standalone utility, not an extension of StableDiffusion's functionalities.~~
 
 
 ## Install
