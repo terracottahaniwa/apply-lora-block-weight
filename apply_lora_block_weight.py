@@ -16,7 +16,7 @@ def do(input_, output, ratios):
     assert isinstance(output, str)
     assert isinstance(ratios, str)
     assert os.path.exists(input_), f"{input_} is not exists"
-    assert os.path.exists(output) == False, f"{output} is exists"
+    assert os.path.exists(output) == False, f"{output} aleady exists"
 
     LOAD_PATH = input_
     SAVE_PATH = output
@@ -65,9 +65,10 @@ def do(input_, output, ratios):
         blockid = strings
 
         if LAYERS == 17:
-            assert blockid in BLOCKID17, blockid
+            assert blockid in BLOCKID26, f"Incorrect layer {blockid}"
+            assert blockid in BLOCKID17, f"{blockid} is not included in 17 layers. May be 26 layers?"
         if LAYERS == 26:
-            assert blockid in BLOCKID26, blockid
+            assert blockid in BLOCKID26, f"Incorrect layer {blockid}" 
         return blockid
 
     with safe_open(LOAD_PATH, framework="pt", device="cpu") as f:
