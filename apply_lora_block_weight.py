@@ -15,8 +15,8 @@ def do(input_, output, ratios):
     assert isinstance(input_, str)
     assert isinstance(output, str)
     assert isinstance(ratios, str)
-    assert os.path.exists(input_)
-    assert os.path.exists(output) == False
+    assert os.path.exists(input_), f"{input_} is not exists"
+    assert os.path.exists(output) == False, f"{output} is exists"
 
     LOAD_PATH = input_
     SAVE_PATH = output
